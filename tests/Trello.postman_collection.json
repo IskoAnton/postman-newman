@@ -1,0 +1,462 @@
+{
+	"id": "750bf129-8234-4b7e-ae7b-bfb61ecb3fa0",
+	"name": "Trello",
+	"description": "",
+	"auth": null,
+	"events": null,
+	"variables": [],
+	"order": [
+		"80cb3cef-cf98-44b2-b278-c9bc472c54e2",
+		"a95f8dfe-3d45-41dc-ba8b-459eeb545f99",
+		"3958541a-d05a-4418-8edf-cfbb4d5fd2e6",
+		"2b412e6d-b70a-42c7-963c-20a0ad1d76b6",
+		"13b82c1a-fc45-4c26-a272-33c9ff4c9e1f",
+		"18e20fe4-6ff9-4137-9845-b3b1a6307724",
+		"e0bf4c7c-6c55-4dd1-b959-698c9abe0e23"
+	],
+	"folders_order": [],
+	"folders": [],
+	"requests": [
+		{
+			"id": "13b82c1a-fc45-4c26-a272-33c9ff4c9e1f",
+			"name": "Move Card to another list",
+			"url": "https://api.trello.com/1/cards/{{cardId}}?key={{trelloKey}}&token={{trelloToken}}&idList={{anotherListId}}",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "PUT",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "key",
+					"value": "{{trelloKey}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "{{trelloToken}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "idList",
+					"value": "{{anotherListId}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6ef19df6-25b0-461d-a29b-98e406dd617b",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"New list is DONE\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.idList).to.eql(pm.environment.get(\"anotherListId\"));",
+							"});"
+						]
+					}
+				}
+			],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "18e20fe4-6ff9-4137-9845-b3b1a6307724",
+			"name": "Delete board",
+			"url": "https://api.trello.com/1/boards/{{boardId}}?key={{trelloKey}}&token={{trelloToken}}",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "DELETE",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "key",
+					"value": "{{trelloKey}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "{{trelloToken}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "id",
+					"value": "5acd4465fee83b12bae64975",
+					"equals": true,
+					"description": "",
+					"enabled": false
+				}
+			],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ba63fc36-7c8d-43d6-955e-19b7be7de5d5",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "2b412e6d-b70a-42c7-963c-20a0ad1d76b6",
+			"name": "Create new card",
+			"url": "https://api.trello.com/1/cards?key={{trelloKey}}&token={{trelloToken}}&idList={{listId}}&name={{cardName}}",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "key",
+					"value": "{{trelloKey}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "{{trelloToken}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "idList",
+					"value": "{{listId}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "name",
+					"value": "{{cardName}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb3258ed-dcc2-497f-bc4e-cc3061cf729c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"",
+							"pm.test(\"Name of card is \"+pm.environment.get(\"cardName\"), function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(pm.environment.get(\"cardName\"));",
+							"});",
+							"",
+							"",
+							"pm.test(\"Get cardId\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"cardId\", jsonData.id)",
+							"});"
+						]
+					}
+				}
+			],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "3958541a-d05a-4418-8edf-cfbb4d5fd2e6",
+			"name": "Create another list",
+			"url": "https://api.trello.com/1/lists?key={{trelloKey}}&token={{trelloToken}}&name={{listName2}}&idBoard={{boardId}}",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "key",
+					"value": "{{trelloKey}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "{{trelloToken}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "name",
+					"value": "{{listName2}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "idBoard",
+					"value": "{{boardId}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "96fb39d5-066c-4916-91f3-074bdbb8ea71",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Name of list2 is correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(pm.environment.get(\"listName2\"));",
+							"});",
+							"",
+							"",
+							"pm.test(\"Remember list2 id\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"anotherListId\", jsonData.id);",
+							"});"
+						]
+					}
+				}
+			],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "80cb3cef-cf98-44b2-b278-c9bc472c54e2",
+			"name": "Crate new board",
+			"url": "https://api.trello.com/1/boards?name={{boardName}}&key={{trelloKey}}&token={{trelloToken}}&defaultLists=false",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "name",
+					"value": "{{boardName}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "key",
+					"value": "{{trelloKey}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "{{trelloToken}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "defaultLists",
+					"value": "false",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6b527287-5be5-4d0b-b9e3-1fae44958c7e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.environment.set(\"boardId\", jsonData.id);",
+							"",
+							"pm.test(\"Json data equals varible\", function() {",
+							"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"boardId\"))",
+							"})",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a20feb16-6b24-472a-adc8-c3e702a9754e",
+						"type": "text/javascript",
+						"exec": [
+							"var v = parseInt(pm.environment.get(\"countNumber\")+1);",
+							"pm.environment.set(\"countNumber\", v);",
+							"pm.environment.set(\"boardName\", \"My Board \"+ v);"
+						]
+					}
+				}
+			],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "a95f8dfe-3d45-41dc-ba8b-459eeb545f99",
+			"name": "Create new list",
+			"url": "https://api.trello.com/1/lists?key={{trelloKey}}&token={{trelloToken}}&name={{listName1}}&idBoard={{boardId}}",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "key",
+					"value": "{{trelloKey}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "{{trelloToken}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "name",
+					"value": "{{listName1}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "idBoard",
+					"value": "{{boardId}}",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "17301bb4-500f-4c21-98a0-c0be43aba9f5",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Name of list1 is correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(pm.environment.get(\"listName1\"));",
+							"});",
+							"",
+							"",
+							"pm.test(\"Remember list1 id\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"listId\", jsonData.id);",
+							"});"
+						]
+					}
+				}
+			],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "e0bf4c7c-6c55-4dd1-b959-698c9abe0e23",
+			"name": "Check board doesn't exist",
+			"url": " https://api.trello.com/1/boards/5acd4465fee83b12bae64975",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "73a4c076-3f3e-4589-9511-6dc76367c8c1",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.environment.unset(\"boardId\")",
+							"pm.environment.unset(\"boardName\")",
+							"pm.environment.unset(\"listId\")",
+							"pm.environment.unset(\"anotherListId\")",
+							"pm.environment.unset(\"cardId\")",
+							"pm.environment.set(\"countNumber\", 0)"
+						]
+					}
+				}
+			],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		}
+	]
+}
